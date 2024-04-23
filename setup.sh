@@ -62,7 +62,7 @@ esac
 
 EOF
 chmod 777 -R /etc/AutoSSL
-nano /etc/AutoSSL/AutoSSL.sh
+nano /etc/AutoSSL/autossl.sh
 
 if [ ! -f "/lib/systemd/system/autossl.service" ];then
    tee /lib/systemd/system/autossl.service <<EOF
