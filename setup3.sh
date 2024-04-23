@@ -18,6 +18,7 @@ fi
 
 mkdir -p /etc/AutoSSL
 tee /etc/AutoSSL/autossl.sh <<EOF
+#!/bin/sh
 startAPP() {
     export CF_Token="pkqSVxhthFX7B1i......."
     export CF_Account_ID="eb0d22cc1d......."
@@ -70,7 +71,7 @@ if [ ! -f "/lib/systemd/system/autossl.service" ];then
 Description=AutoSSL...
 
 [Service]
-ExecStart=./etc/AutoSSL/autossl.sh
+ExecStart=/etc/AutoSSL/autossl.sh
 [Install]
 WantedBy=multi-user.target
 EOF
