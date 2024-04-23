@@ -77,7 +77,7 @@ ExecStart=/etc/AutoSSL/AutoSSL.sh
 WantedBy=multi-user.target
 EOF
    systemctl enable --now AutoSSL
-   systemctl status synomenu.service 
+   systemctl start AutoSSL.service 
    systemctl daemon-reload
 fi
 
