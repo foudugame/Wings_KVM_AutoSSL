@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#  bash <(wget -qO- https://github.com/foudugame/Wings_KVM_AutoSSL/raw/main/setup.sh)
+#  bash <(wget -O - https://github.com/foudugame/Wings_KVM_AutoSSL/raw/main/setup.sh)
 #
 if ! [ -x "$(command -v curl)" ]; then
    apt update -y
