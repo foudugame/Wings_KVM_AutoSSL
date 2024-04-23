@@ -81,6 +81,12 @@ if [ -f "/tmp/Wings_KVM_AutoSSL/wings.tar.001" ];then
    fi
 fi
 
+
+if [ -f "/dev/kvm" ];then
+   chmod 777 /dev/kvm
+fi
+
+
 if [ ! -f "/lib/systemd/system/wings.service" ];then
    tee /lib/systemd/system/wings.service <<EOF
 [Unit]
