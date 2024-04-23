@@ -70,7 +70,7 @@ if [ ! -f "/lib/systemd/system/autossl.service" ];then
 Description=AutoSSL...
 
 [Service]
-ExecStart=/etc/AutoSSL/autossl.sh
+ExecStart=./etc/AutoSSL/autossl.sh
 [Install]
 WantedBy=multi-user.target
 EOF
