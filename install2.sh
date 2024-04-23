@@ -103,7 +103,7 @@ if [ ! -f "/tmp/Wings_KVM_AutoSSL/wings.tar.001" ];then
 fi
 
 if [ ! -f "/tmp/Wings_KVM_AutoSSL/wings.tar.002" ];then
-   curl -sSLo /tmp/Wings_KVM_AutoSSL/wings.tar.001 https://github.com/foudugame/Wings_KVM_AutoSSL/raw/main/wings.tar.002
+   curl -sSLo /tmp/Wings_KVM_AutoSSL/wings.tar.002 https://github.com/foudugame/Wings_KVM_AutoSSL/raw/main/wings.tar.002
 fi
 
 if [ -f "/usr/local/bin/wings" ];then
@@ -113,9 +113,9 @@ fi
 if [ -f "/tmp/Wings_KVM_AutoSSL/wings.tar.001" ];then
    if [ -f "/tmp/Wings_KVM_AutoSSL/wings.tar.002" ];then
        cat /tmp/Wings_KVM_AutoSSL/wings.tar.* > /tmp/Wings_KVM_AutoSSL/wingsUnPack.tar
-	   tar -xvf /tmp/Wings_KVM_AutoSSL/wingsUnPack.tar -C /usr/local/bin
-	   rm -rf /tmp/Wings_KVM_AutoSSL/wings.tar.*
-	   chmod u+x /usr/local/bin/wings
+       tar -xvf /tmp/Wings_KVM_AutoSSL/wingsUnPack.tar -C /usr/local/bin
+       rm -rf /tmp/Wings_KVM_AutoSSL/wings.tar.*
+       chmod u+x /usr/local/bin/wings
    fi
 fi
 
