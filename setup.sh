@@ -2,6 +2,10 @@
 #  wget -O -  https://github.com/foudugame/Wings_KVM_AutoSSL/raw/main/setup.sh | sh -s
 #  
 #
+clear
+echo "load ...."
+sleep 2
+
 if ! [ -x "$(command -v curl)" ]; then
    apt update -y
    apt upgrade -y
