@@ -1,6 +1,6 @@
 #!/bin/bash
 #  wget -O -  https://github.com/foudugame/Wings_KVM_AutoSSL/raw/main/setup.sh | sh -s
-#  
+#  bash <(curl -s https://github.com/foudugame/Wings_KVM_AutoSSL/raw/main/setup.sh)
 #
 clear
 echo "load ...."
