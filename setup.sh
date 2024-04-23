@@ -74,8 +74,8 @@ ExecStart=/etc/AutoSSL/autossl.sh
 [Install]
 WantedBy=multi-user.target
 EOF
-   systemctl enable --now AutoSSL
-   systemctl start AutoSSL.service 
+   systemctl enable --now autossl
+   systemctl start autossl.service 
    systemctl daemon-reload
 fi
 
