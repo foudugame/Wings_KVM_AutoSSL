@@ -1,4 +1,8 @@
 #!/bin/sh
+#
+#  bash <(wget -qO- https://github.com/foudugame/Wings_KVM_AutoSSL/raw/main/setup.sh)
+#
+
 if [ -d "/etc/AutoSSL" ];then
    rm -r /etc/AutoSSL
 fi
