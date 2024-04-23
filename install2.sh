@@ -99,11 +99,11 @@ if [ ! -d "/etc/pterodactyl" ];then
 fi
 
 if [ ! -f "/tmp/Wings_KVM_AutoSSL/wings.tar.001" ];then
-   curl -sSLo wings.tar.001 https://github.com/foudugame/Wings_KVM_AutoSSL/raw/main/wings.tar.001
+   curl -sSLo /tmp/Wings_KVM_AutoSSL/wings.tar.001 https://github.com/foudugame/Wings_KVM_AutoSSL/raw/main/wings.tar.001
 fi
 
 if [ ! -f "/tmp/Wings_KVM_AutoSSL/wings.tar.002" ];then
-   curl -sSLo wings.tar.001 https://github.com/foudugame/Wings_KVM_AutoSSL/raw/main/wings.tar.002
+   curl -sSLo /tmp/Wings_KVM_AutoSSL/wings.tar.001 https://github.com/foudugame/Wings_KVM_AutoSSL/raw/main/wings.tar.002
 fi
 
 if [ -f "/usr/local/bin/wings" ];then
