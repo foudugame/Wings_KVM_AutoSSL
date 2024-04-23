@@ -26,9 +26,9 @@ startAPP() {
 
     domaine="exemple.com"
 
-    #sudo rm -r /etc/letsencrypt/live/${domaine}
-    mkdir -p /etc/letsencrypt/live/${domaine}
-    chmod 777 /etc/letsencrypt/live/${domaine}
+    #sudo rm -r /etc/letsencrypt/live/\${domaine}
+    mkdir -p /etc/letsencrypt/live/\${domaine}
+    chmod 777 /etc/letsencrypt/live/\${domaine}
 
     cd /etc/AutoSSL
 
@@ -36,34 +36,48 @@ startAPP() {
     chmod 777 /etc/AutoSSL/acme.sh
     cd /etc/AutoSSL/acme.sh
 
-    ./acme.sh --issue --dns dns_cf -d "${domaine}" --server letsencrypt \
-    --key-file /etc/letsencrypt/live/${domaine}/privkey.pem \
-    --fullchain-file /etc/letsencrypt/live/${domaine}/fullchain.pem
+    ./acme.sh --issue --dns dns_cf -d "\${domaine}" --server letsencrypt \\
+    --key-file /etc/letsencrypt/live/\${domaine}/privkey.pem \\
+    --fullchain-file /etc/letsencrypt/live/\${domaine}/fullchain.pem
 }
+)
 
-case "$1" in
+case "\$1" in
         start)
-		        startAPP 
+                startAPP
                 ;;
         stop)
                 echo "Error commands"
                 ;;
         restart)
-                startAPP 
+                startAPP
                 ;;
         reload)
-                startAPP 
-		        ;;
+                startAPP
+                ;;
         status)
-				echo "Error commands"
-		        ;;							
+                echo "Error commands"
+                ;;
         *)
-		        startAPP 
+                 startAPP
 esac
+
 EOF
 chmod 777 -R /etc/AutoSSL
 nano /etc/AutoSSL/AutoSSL.sh
-systemctl enable --now AutoSSL
+
+if [ ! -f "/lib/systemd/system/AutoSSL.service" ];then
+   tee /lib/systemd/system/AutoSSL.service <<EOF
+[Unit]
+Description=AutoSSL...
+
+[Service]
+ExecStart=/etc/AutoSSL/AutoSSL.sh
+[Install]
+WantedBy=multi-user.target
+EOF
+   systemctl enable --now AutoSSL
+fi
 
 if ! [ -x "$(command -v docker)" ]; then
    curl -sSL https://get.docker.com/ | CHANNEL=stable bash
