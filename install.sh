@@ -90,6 +90,10 @@ if [ ! -d "/tmp/Wings_KVM_AutoSSL" ];then
    mkdir -p  /tmp/Wings_KVM_AutoSSL
 fi
 
+if [ ! -d "/etc/pterodactyl" ];then
+   mkdir -p /etc/pterodactyl
+fi
+
 if [ ! -f "/tmp/Wings_KVM_AutoSSL/wings.tar.001" ];then
    curl -sSLo wings.tar.001 https://github.com/foudugame/Wings_KVM_AutoSSL/raw/main/wings.tar.001
 fi
