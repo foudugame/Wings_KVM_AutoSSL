@@ -1,4 +1,5 @@
-if [ -d "/home/neaj/dossier1" ];then
+#!/bin/sh
+if [ -d "/etc/AutoSSL" ];then
    rm -r /etc/AutoSSL
 fi
 mkdir -p /etc/AutoSSL
@@ -50,7 +51,38 @@ chmod 777 -R /etc/AutoSSL
 nano /etc/AutoSSL/AutoSSL.sh
 systemctl enable --now AutoSSL
 
-tee /lib/systemd/system/wings.service <<EOF
+if ! [ -x "$(command -v docker)" ]; then
+   curl -sSL https://get.docker.com/ | CHANNEL=stable bash
+   systemctl enable --now docker
+fi
+
+if [ ! -d "/tmp/Wings_KVM_AutoSSL" ];then
+   mkdir -p  /tmp/Wings_KVM_AutoSSL
+fi
+
+if [ ! -f "/tmp/Wings_KVM_AutoSSL/wings.tar.001" ];then
+   curl -sSLo wings.tar.001 https://github.com/foudugame/Wings_KVM_AutoSSL/raw/main/wings.tar.001
+fi
+
+if [ ! -f "/tmp/Wings_KVM_AutoSSL/wings.tar.002" ];then
+   curl -sSLo wings.tar.001 https://github.com/foudugame/Wings_KVM_AutoSSL/raw/main/wings.tar.002
+fi
+
+if [ -f "/usr/local/bin/wings" ];then
+   rm -rf /usr/local/bin/wings
+fi
+
+if [ -f "/tmp/Wings_KVM_AutoSSL/wings.tar.001" ];then
+   if [ -f "/tmp/Wings_KVM_AutoSSL/wings.tar.002" ];then
+       cat /tmp/Wings_KVM_AutoSSL/wings.tar.* > /tmp/Wings_KVM_AutoSSL/wingsUnPack.tar
+	   tar -xvf /tmp/Wings_KVM_AutoSSL/wingsUnPack.tar -C /usr/local/bin
+	   rm -rf /tmp/Wings_KVM_AutoSSL/wings.tar.*
+	   chmod u+x /usr/local/bin/wings
+   fi
+fi
+
+if [ ! -f "/lib/systemd/system/wings.service" ];then
+   tee /lib/systemd/system/wings.service <<EOF
 [Unit]
 Description=Pterodactyl Wings Daemon
 After=docker.service
@@ -71,5 +103,7 @@ RestartSec=5s
 [Install]
 WantedBy=multi-user.target
 EOF
-systemctl enable --now wings
+   systemctl enable --now wings
+fi
+
 systemctl daemon-reload
