@@ -19,7 +19,6 @@ fi
 mkdir -p /etc/AutoSSL
 tee /etc/AutoSSL/AutoSSL.sh <<EOF
 startAPP() {
-    echo "
     export CF_Token="pkqSVxhthFX7B1i......."
     export CF_Account_ID="eb0d22cc1d......."
     export CF_Zone_ID="bf687fd701b2........"
@@ -40,7 +39,6 @@ startAPP() {
     --key-file /etc/letsencrypt/live/\${domaine}/privkey.pem \\
     --fullchain-file /etc/letsencrypt/live/\${domaine}/fullchain.pem
 }
-)
 
 case "\$1" in
         start)
