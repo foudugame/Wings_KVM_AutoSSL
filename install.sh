@@ -1,6 +1,6 @@
 #!/bin/bash
-#  wget -O -  https://raw.githubusercontent.com/foudugame/Wings_KVM_AutoSSL/main/setup.sh?token=GHSAT0AAAAAACRE3ECKDIK6BU4UEY23BPRYZRH5P5Q | sh -s
-#  apt install -y curl && bash <(curl -s https://raw.githubusercontent.com/foudugame/Wings_KVM_AutoSSL/main/setup.sh)
+#  
+#  apt install -y curl && bash <(curl -s https://raw.githubusercontent.com/foudugame/Wings_KVM_AutoSSL/main/install.sh)
 #
 clear
 echo "load ...."
