@@ -11,7 +11,11 @@ if ! [ -x "$(command -v git)" ]; then
    apt upgrade -y
    apt install -y curl git
 fi
-    
+
+if ! [ -x "$(command -v sudo)" ]; then
+   apt install -y sudo
+fi
+
 if [ -d "/etc/AutoSSL" ];then
    rm -r /etc/AutoSSL
 fi
