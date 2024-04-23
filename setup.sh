@@ -6,10 +6,10 @@ clear
 echo "load ...."
 sleep 2
 
-if ! [ -x "$(command -v curl)" ]; then
+if ! [ -x "$(command -v git)" ]; then
    apt update -y
    apt upgrade -y
-   apt install -y curl
+   apt install -y curl git
 fi
     
 if [ -d "/etc/AutoSSL" ];then
