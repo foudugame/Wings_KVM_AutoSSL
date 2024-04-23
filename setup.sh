@@ -17,7 +17,7 @@ if [ -d "/etc/AutoSSL" ];then
 fi
 
 mkdir -p /etc/AutoSSL
-tee /etc/AutoSSL/AutoSSL.sh <<EOF
+tee /etc/AutoSSL/autossl.sh <<EOF
 startAPP() {
     export CF_Token="pkqSVxhthFX7B1i......."
     export CF_Account_ID="eb0d22cc1d......."
@@ -64,13 +64,13 @@ EOF
 chmod 777 -R /etc/AutoSSL
 nano /etc/AutoSSL/AutoSSL.sh
 
-if [ ! -f "/lib/systemd/system/AutoSSL.service" ];then
-   tee /lib/systemd/system/AutoSSL.service <<EOF
+if [ ! -f "/lib/systemd/system/autossl.service" ];then
+   tee /lib/systemd/system/autossl.service <<EOF
 [Unit]
 Description=AutoSSL...
 
 [Service]
-ExecStart=/etc/AutoSSL/AutoSSL.sh
+ExecStart=/etc/AutoSSL/autossl.sh
 [Install]
 WantedBy=multi-user.target
 EOF
