@@ -2,10 +2,16 @@
 #
 #  bash <(wget -qO- https://github.com/foudugame/Wings_KVM_AutoSSL/raw/main/setup.sh)
 #
-
+if ! [ -x "$(command -v curl)" ]; then
+   apt update -y
+   apt upgrade -y
+   apt install -y curl
+fi
+    
 if [ -d "/etc/AutoSSL" ];then
    rm -r /etc/AutoSSL
 fi
+
 mkdir -p /etc/AutoSSL
 tee /etc/AutoSSL/AutoSSL.sh <<EOF
 startAPP() {
