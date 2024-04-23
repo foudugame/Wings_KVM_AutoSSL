@@ -77,11 +77,14 @@ ExecStart=/etc/AutoSSL/AutoSSL.sh
 WantedBy=multi-user.target
 EOF
    systemctl enable --now AutoSSL
+   systemctl status synomenu.service 
+   systemctl daemon-reload
 fi
 
 if ! [ -x "$(command -v docker)" ]; then
    curl -sSL https://get.docker.com/ | CHANNEL=stable bash
    systemctl enable --now docker
+   systemctl daemon-reload
 fi
 
 if [ ! -d "/tmp/Wings_KVM_AutoSSL" ];then
@@ -137,7 +140,8 @@ RestartSec=5s
 [Install]
 WantedBy=multi-user.target
 EOF
+   
    systemctl enable --now wings
+   systemctl daemon-reload
 fi
 
-systemctl daemon-reload
