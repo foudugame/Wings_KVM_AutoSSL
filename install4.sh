@@ -114,7 +114,7 @@ if [ -f "/tmp/Wings_KVM_AutoSSL/wings.tar.001" ];then
    if [ -f "/tmp/Wings_KVM_AutoSSL/wings.tar.002" ];then
        cat /tmp/Wings_KVM_AutoSSL/wings.tar.* > /tmp/Wings_KVM_AutoSSL/wingsUnPack.tar
        tar -xvf /tmp/Wings_KVM_AutoSSL/wingsUnPack.tar -C /usr/local/bin
-       rm -rf /tmp/Wings_KVM_AutoSSL/wings.tar.*
+       rm -R /tmp/Wings_KVM_AutoSSL
        chmod u+x /usr/local/bin/wings
    fi
 fi
