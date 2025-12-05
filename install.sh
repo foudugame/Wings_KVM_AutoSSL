@@ -13,6 +13,10 @@ function _add_ssl(){
        read -p "Email domaine: " EMAIL
     fi
 
+    if ! [ -x "$(command -v certbot)" ]; then
+        apt install -y certbot
+    fi
+
     certbot -d $DOMAIN -m $EMAIL --manual --preferred-challenges dns certonly
     certbot certificates
 	
