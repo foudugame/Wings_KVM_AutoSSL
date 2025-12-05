@@ -2,6 +2,55 @@
 #  
 #  apt install -y curl && bash <(curl -s https://raw.githubusercontent.com/foudugame/Wings_KVM_AutoSSL/main/install.sh)
 #
+
+function _add_ssl(){
+
+	if [ "${DOMAIN}" == "" ]; then
+        read -p "Domaine (SSL): " DOMAIN
+		exit
+    fi
+
+    if [ "${EMAIL}" == "" ]; then
+       read -p "Email domaine: " EMAIL
+	   exit
+    fi
+
+    certbot -d $DOMAIN -m $EMAIL --manual --preferred-challenges dns certonly
+    certbot certificates
+	
+    if [ ! -f "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem" ];then
+	    read -p "Erreur certbot aucuns certificates!"
+        _add_ssl		
+		exit
+    fi
+	
+    if [ ! -f "/etc/letsencrypt/live/${DOMAIN}/privkey.pem" ];then
+        read -p "Erreur certbot aucuns certificates!"
+        _add_ssl
+		exit
+    fi
+	
+    /usr/bin/sed -i 's/cert: .*/cert: \/etc\/letsencrypt\/live\/'${DOMAIN}'\/fullchain.pem/' /etc/pterodactyl/config.yml
+    /usr/bin/sed -i 's/key: .*/key: \/etc\/letsencrypt\/live\/'${DOMAIN}'\/privkey.pem/' /etc/pterodactyl/config.yml
+    /usr/bin/sed -i 's/enabled: false/enabled: true/' /etc/pterodactyl/config.yml
+    /usr/bin/sed -i 's/allowed_origins:.*/allowed_origins: ["'${DOMAIN}'"]/' /etc/pterodactyl/config.yml
+
+    echo -e "# ========================================================================="
+    echo -e "# Configuration Cron"
+    echo -e "# ========================================================================="
+    echo -e ""
+    echo -e "Par exemple, pour que le script s'exécute à 2 h 00 du matin tous les jours, nous ouvririons cron avec la commande suivante :"
+    echo -e "Et ajoutez la ligne suivante à cron :"
+    echo -e ""	
+    echo -e "crontab -e"
+    echo -e ""
+    echo -e "0 2 * * * certbot renew --quiet --deploy-hook \"systemctl restart wings\""
+    echo -e ""
+    read -p "Press any key to resume ..."
+	nano /etc/pterodactyl/config.yml
+	/usr/bin/systemctl restart wings
+}
+
 clear
 echo "load ...."
 sleep 2
@@ -115,54 +164,6 @@ EOF
    systemctl enable --now wings
    systemctl daemon-reload
 fi
-
-function _add_ssl(){
-
-	if [ "${DOMAIN}" == "" ]; then
-        read -p "Domaine (SSL): " DOMAIN
-		exit
-    fi
-
-    if [ "${EMAIL}" == "" ]; then
-       read -p "Email domaine: " EMAIL
-	   exit
-    fi
-
-    certbot -d $DOMAIN -m $EMAIL --manual --preferred-challenges dns certonly
-    certbot certificates
-	
-    if [ ! -f "/etc/letsencrypt/live/${DOMAIN}/fullchain.pem" ];then
-	    read -p "Erreur certbot aucuns certificates!"
-        _add_ssl		
-		exit
-    fi
-	
-    if [ ! -f "/etc/letsencrypt/live/${DOMAIN}/privkey.pem" ];then
-        read -p "Erreur certbot aucuns certificates!"
-        _add_ssl
-		exit
-    fi
-	
-    /usr/bin/sed -i 's/cert: .*/cert: \/etc\/letsencrypt\/live\/'${DOMAIN}'\/fullchain.pem/' /etc/pterodactyl/config.yml
-    /usr/bin/sed -i 's/key: .*/key: \/etc\/letsencrypt\/live\/'${DOMAIN}'\/privkey.pem/' /etc/pterodactyl/config.yml
-    /usr/bin/sed -i 's/enabled: false/enabled: true/' /etc/pterodactyl/config.yml
-    /usr/bin/sed -i 's/allowed_origins:.*/allowed_origins: ["'${DOMAIN}'"]/' /etc/pterodactyl/config.yml
-
-    echo -e "# ========================================================================="
-    echo -e "# Configuration Cron"
-    echo -e "# ========================================================================="
-    echo -e ""
-    echo -e "Par exemple, pour que le script s'exécute à 2 h 00 du matin tous les jours, nous ouvririons cron avec la commande suivante :"
-    echo -e "Et ajoutez la ligne suivante à cron :"
-    echo -e ""	
-    echo -e "crontab -e"
-    echo -e ""
-    echo -e "0 2 * * * certbot renew --quiet --deploy-hook \"systemctl restart wings\""
-    echo -e ""
-    read -p "Press any key to resume ..."
-	nano /etc/pterodactyl/config.yml
-	/usr/bin/systemctl restart wings
-}
 
 read -r -p "${1:-Installer le certificate au wings (SSL)? [y/N]} " SSLADD
 case "$SSLADD" in
