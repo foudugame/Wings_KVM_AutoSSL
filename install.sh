@@ -84,6 +84,7 @@ fi
 if [ "$op2" == "3" ]; then
    /usr/bin/sed -i 's/enabled: false/enabled: true/' /etc/pterodactyl/config.yml
    /usr/bin/systemctl restart wings
+   certbot delete
    exit
 fi
 
