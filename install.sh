@@ -5,8 +5,37 @@
 clear
 echo "load ...."
 sleep 2
-apt update -y
-apt upgrade -y
+read -r -p "${1:-Voulez-vous mettre à jour le système avant ? [y/N]} " op1
+case "$op1" in
+    [yY][eE][sS]|[yY]) 
+        apt update -y
+        apt upgrade -y
+		clear
+        ;;
+    *)
+esac
+
+clear
+echo -e "# ========================================================================="
+echo -e "# Installations"
+echo -e "# ========================================================================="
+echo -e ""
+echo -e " 1 - Installer Wings/kvm (default)"
+echo -e " 2 - Activer le certificate (SSL)"
+echo -e " 3 - Désactiver le certificate (SSL)"
+
+read -r -p "${1:-Voulez-vous mettre à jour le système avant ? [y/N]} " op2
+if [ "$op2" == "2" ]; then
+   _add_ssl
+   exit
+fi
+
+if [ "$op2" == "3" ]; then
+   /usr/bin/sed -i 's/enabled: false/enabled: true/' /etc/pterodactyl/config.yml
+   /usr/bin/systemctl restart wings
+   exit
+fi
+
 if ! [ -x "$(command -v git)" ]; then
    apt install -y curl git
 fi
@@ -88,16 +117,14 @@ EOF
 fi
 
 function _add_ssl(){
-    read -p "Domaine (SSL): " DOMAIN
-    read -p "Email domaine: " EMAIL
-    
+
 	if [ "${DOMAIN}" == "" ]; then
-        _add_ssl
+        read -p "Domaine (SSL): " DOMAIN
 		exit
     fi
 
     if [ "${EMAIL}" == "" ]; then
-       _add_ssl
+       read -p "Email domaine: " EMAIL
 	   exit
     fi
 
@@ -127,10 +154,14 @@ function _add_ssl(){
     echo -e ""
     echo -e "Par exemple, pour que le script s'exécute à 2 h 00 du matin tous les jours, nous ouvririons cron avec la commande suivante :"
     echo -e "Et ajoutez la ligne suivante à cron :"
+    echo -e ""	
+    echo -e "crontab -e"
     echo -e ""
     echo -e "0 2 * * * certbot renew --quiet --deploy-hook \"systemctl restart wings\""
     echo -e ""
     read -p "Press any key to resume ..."
+	nano /etc/pterodactyl/config.yml
+	/usr/bin/systemctl restart wings
 }
 
 read -r -p "${1:-Installer le certificate au wings (SSL)? [y/N]} " SSLADD
@@ -146,3 +177,6 @@ sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
 sudo sysctl -w net.ipv6.conf.all.forwarding=0
 sudo sysctl -w net.ipv4.ip_forward=1
 sudo echo 1 > /proc/sys/net/ipv4/ip_forward
+
+test2.the-bandit.ovh
+mail@test2.the-bandit.ovh
