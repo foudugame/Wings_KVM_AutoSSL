@@ -24,7 +24,7 @@ echo -e " 1 - Installer Wings/kvm (default)"
 echo -e " 2 - Activer le certificate (SSL)"
 echo -e " 3 - Désactiver le certificate (SSL)"
 
-read -r -p "${1:-Voulez-vous mettre à jour le système avant ? [y/N]} " op2
+read -r -p "${1:-? [1-3]} " op2
 if [ "$op2" == "2" ]; then
    _add_ssl
    exit
