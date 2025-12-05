@@ -7,12 +7,10 @@ function _add_ssl(){
 
 	if [ "${DOMAIN}" == "" ]; then
         read -p "Domaine (SSL): " DOMAIN
-		exit
     fi
 
     if [ "${EMAIL}" == "" ]; then
        read -p "Email domaine: " EMAIL
-	   exit
     fi
 
     certbot -d $DOMAIN -m $EMAIL --manual --preferred-challenges dns certonly
